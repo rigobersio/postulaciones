@@ -58,6 +58,55 @@ en este caso el nombre es **postulaciones-app**
         //! a lo que hay que responder que no porque podría causar errores
 
         //! luego pregunta por estilos CSS y en este caso no tengo ni la más minima idea pero se puede dejar CSS puro
+        ```
 
         3.4 aun después de crear el proyecto angular, ocurrieron errores en la instalación. De momento solo hice un npm install para descargar dependencias faltantes, asimismo, también ejecute `npm cache clean --force`.
+
+4. Apuntes primeros pasos en Angular.
+    4.1 ejecutar
+        ```bash
+        ng serve -o
+        ```
+    4.2 dentro de src existe index.html y este es el archivo que representa la pagina web, en <body> se encuentra la etiqueta <app-root>
+        esa etiqueta corresponde al componente principal de la app. en otras palabras si se comenta este único componente  <!--<app-root></app-root>--> no se visualizara nada
+    4.3 los componentes se almacenan dentro de app `y al menos necesitan un archivo .ts`, por ejemplo **app.component.js**
+    4.4 siempre que se crea un componente es necesario importar en el un decorador: 
+        ```bash
+        import { component } form '@angular/core';
+        // component es un decorador que ayuda a definir ciertas propiedades de un componente, como por ejemplo el selector
+        // el **selector** es el nombre que tendrá el componente en el archivo html, por ejemplo app-root, entonces en el archivo index.html se 
+        // se usa el **selector** app-root en formato de etiqueta (<app-root>)
+        // el **selector** es obligatorio, por lo que no se puede dejar vacío
+        // otra propiedad es **templateUrl**, que indica el archivo que tendrá el contenido del componente, en otras palabras, cada vez que se llame a <app-root> 
+        // a su vez se llamara al archivo app.component.html indicado en **templateUrl**
+        // también esta la propiedad **styleUrl** que indica el archivo css del componente.
+        // el valor de la propiedad **styleUrl** se escribe entre [] porque es un arreglo de archivos.
+        @component({
+            selector: 'app-root',
+            templateUrl: './app.component.html',
+            styleUrls: ['./app.component.css']
+        })
+        
+        // la propiedad templateUrl no es necesaria ya que se puede escribir todo el código en le archivo app.component.ts
+        // para lo anterior es necesario crear la propiedad **template** en vez de **templateUrl**
+        // el valor de la propiedad **template** seria el código html del componente y se escribe como una cadena de texto (plantilla literal)
+        // pasa la misma historia con css
+
+        ```
+    4.5 el archivo .component.spec.ts es para probar el componente.
+    4.5 el archivo .module.ts es como una caja de herramientas ... dentro de ese archivo o módulo se van definiendo todas las herramientas o partes del componente
+        4.5.1 componente standalone, a partir de angular 9.0 se crea un componente standalone
+            ```bash
+            @component({
+                standalone: true,
+                selector: 'app-root',
+                templateUrl: './app.component.html',
+                styleUrls: ['./app.component.css']
+            })
+            ```
+            esta clase de componente no necesita del archivo .module.ts ya que los standalone se renderizan ocupando una lógica diferente a los componentes normales.
+
+    5. También mencionar que la carpeta src está el archivo **favicon.ico** que es el icono de la aplicación y eventualmente la carpeta environments donde se pueden encontrar los archivos de configuración para desarrollo y producción (enviroment.ts y environment.prod.ts). `Al parecer esto solo aplica por defecto hasta angular 14`. A partir de **Angular 15** es necesario crear la carpeta y los archivos manuamente si es que se desea configurar el **enviroment** para almacenar credenciales.
+
+    
         
