@@ -106,7 +106,147 @@ en este caso el nombre es **postulaciones-app**
             ```
             esta clase de componente no necesita del archivo .module.ts ya que los standalone se renderizan ocupando una lógica diferente a los componentes normales.
 
-    5. También mencionar que la carpeta src está el archivo **favicon.ico** que es el icono de la aplicación y eventualmente la carpeta environments donde se pueden encontrar los archivos de configuración para desarrollo y producción (enviroment.ts y environment.prod.ts). `Al parecer esto solo aplica por defecto hasta angular 14`. A partir de **Angular 15** es necesario crear la carpeta y los archivos manuamente si es que se desea configurar el **enviroment** para almacenar credenciales.
+    5. También mencionar que la carpeta src está el archivo **favicon.ico** que es el icono de la aplicación y eventualmente la carpeta environments donde se pueden encontrar los archivos de configuración para desarrollo y producción (enviroment.ts y environment.prod.ts). `Al parecer esto solo aplica por defecto hasta angular 14`. A partir de **Angular 15** es necesario crear la carpeta y los archivos manualmente si es que se desea configurar el **enviroment** para almacenar credenciales.
+
+
+# Nuevo componente
+
+1. cuando se trabaja con un nuevo componente lo normal es tenerlo separado en archivos .ts, .html y .css.
+
+2. creación manual del componente contador
+    2.1 dentro de la carpeta src/app se crea la carpeta **contador**.
+    2.2 en esta carpeta se crea un archivo **contador.component.ts**
+        2.2.1 en este archivo es necesario importar el decorador @component
+
+        ```bash
+        import { component } from '@angular/core';
+
+        @component({
+            selector: 'app-contador',
+            templateUrl: './contador.component.html',
+            styleUrls: ['./contador.component.css']
+            
+            // siempre que se crea un componente es necesario importar en el un decorador
+            // el decorador es un objeto que define propiedades de un componente
+            
+            /* siempre que se define un componente es necesario el archivo .ts tiene que llevar una clase que sea el nombre del componente. Dentro de esta clase se define toda la lógica del componente 
+            */
+        })
+        
+        class ContadorComponent {
+                
+            }
+        ```
+        Lo anterior ha definido un componente y su lógica se gestiona con la clase ContadorComponent, no obstante es necesario que está se exporte y luego sea importada.
+
+    2.3 `Exportar e importar el componente`
+
+    ```bash
+        import { component } from '@angular/core';
+
+        @component({
+            selector: 'app-contador',
+            templateUrl: './contador.component.html',
+            styleUrls: ['./contador.component.css']
+            
+        })
+
+        export class ContadorComponent {
+                
+            }
+        ```
+    ahora la clase se exporta para que pueda ser importada.
+
+    2.4 ¿cómo se importar el componente?
+        Hay 2 formas generales de hacer eso. Por ejemplo si se quiere importar **contador** en el componente AppComponent, es necesario hacer ajustes en el archivo app.module.ts
+
+        ```bash
+        import { NgModule } from '@angular/core';
+        import { BrowserModule } from '@angular/platform-browser';
+
+        import { AppComponent } from './app.component';
+        import { ContadorComponent } from './app/contador/contador.component';
+
+
+        @NgModule({
+            declarations: [
+                AppComponent,
+                ContadorComponent //!ojo acá, eso ya permitiría ocupar contador en el AppComponent
+            ],
+            imports: [
+                BrowserModule
+            ],
+            providers: [],
+            bootstrap: [AppComponent]
+        })
+        export class AppModule { }
+        ```
+        Por otra parte en versiones superiores como **angular 17** no es necesario hacer esto ya los módulos han sido reemplazados por una nueva característica llamada `componentes autónomos` (standalone components). Esto significa que cada componente es ahora su propio módulo y puede importar y exportar funcionalidades directamente.
+
+        ```bash
+        import { Component } from '@angular/core';
+        import { RouterOutlet } from '@angular/router';
+
+        @Component({
+        selector: 'app-root',
+        standalone: true, //!ojo acá
+        imports: [RouterOutlet],
+        templateUrl: './app.component.html',
+        styleUrl: './app.component.css'
+        })
+        export class AppComponent {
+        title = 'postulaciones-angular-mongo';
+        }
+        ```
+
+        como en este caso appComponent es un `componentes autónomos`, el componente **contador** y para importarlo se tendría que agregar en el array de imports de decorador. Además de lo anterior es necesario transformar al componente **contador** en un `componente autónomo` ocupando `standalone: true` en el decorador. Con el cambio anterior se podría agregar **contador** directamente en app.component.html ocupando el selector `app-contador` como una etiqueta.
+
+        ```bash
+        import { Component } from "@angular/core";
+
+        @Component({
+            selector: 'app-contador',
+            standalone: true,
+            templateUrl: './contador.component.html',
+            styleUrls: ['./contador.component.css']
+        })
+
+        export class ContadorComponent {
+
+            public contador: number = 0;
+        ```
+
+        ```bash
+        import { Component } from '@angular/core';
+        import { RouterOutlet } from '@angular/router';
+        import { ContadorComponent } from './contador/contador.component';
+
+        @Component({
+        selector: 'app-root',
+        standalone: true,
+        imports: [RouterOutlet, ContadorComponent],
+        templateUrl: './app.component.html',
+        styleUrl: './app.component.css'
+        })
+        export class AppComponent {
+        title = 'postulaciones-angular-mongo';
+        }
+
+        ```
+
+        ```bash
+        <main>
+        <h1>Hola y bienvenido a la app de postulaciones</h1>
+        <p>yo pertenezco a app.component</p>
+        <br/>
+        <div>
+            <h2>yo soy un contenedor de contador</h2>
+            <app-contador></app-contador>
+        </div>
+
+        </main>
+        ```
 
     
+
         
