@@ -247,6 +247,14 @@ en este caso el nombre es **postulaciones-app**
         </main>
         ```
 
-    
+    2.5 lo lógico es que también se cree un componente .component.css y .component.html, para descomponer el código del componente
 
+3. también se puede crear un nuevo componente utilizando el comando ng generate component
+    ```bash
+    ng generate component nombre_del_componente
+    ```
+    3.1 como ejemplo se creará un LoginComponent
+    ```bash
+    ng generate component login
+    ```
         
