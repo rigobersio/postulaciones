@@ -318,3 +318,41 @@ en este caso el nombre es **postulaciones-app**
     <span>{{ numero }}</span>
     <button (click)="decrementar()">-</button>
     ``` 
+    ## consideraciones para utilizar Lógica
+
+        Los botones cuentan con el atributo disabled, para deshabilitarlos, asimismo la negación de este atributo puede habilitarlos.
+
+        En Angular se puede hacer uso de [] en los atributos de una etiqueta HTML. Esto se llama “Enlace de Propiedades” o “Property Binding” en inglés. Esta es una característica de Angular que permite asignar valores a propiedades de elementos HTML directamente desde el componente de TypeScript. Ejemplo
+
+        ```html
+        <button [disabled]="true">Botón</button>
+        ```
+        En este caso no tiene mucho sentido pero el bindeo de del valor del atributo se puede gestionar con lógica. En vez del valor "true" se podría agregar directamente el nombre de una propiedad de la clase del componente.
+
+        ```html
+        button [disabled]="condicional">Botón</button>
+        ```
+        ```typescript
+        export class componenteTal {
+            condicional: boolean;
+            nombreDeUnBoton: string;
+            constructor() {
+                this.condicional = true;
+                this.nombreDeUnBoton = 'Botón para deshabilitar otro botón';
+            }
+
+            cambiarValorCondicional() {
+                if (this.condicional) {
+                    this.condicional = false;
+                } else {
+                    this.condicional = true;
+                }
+            }
+        }
+        ```
+        `¿cómo ejecutar la lógica de cambiarValorCondicional desde la plantilla html?`
+        ```html
+        <button [disabled]="condicional">Botón</button>
+        <button (click)="cambiarValorCondicional()">{{ nombreDeUnBoton }}</button>
+        ```
+        Los valores de los atributos de las etiquetas HTML se pueden modificar de forma dinámica y además se puede escribir directamente siendo elemento **TS**, no obstante hay que encerrarlos entre comillas y el nombre del atributo se tiene que encerrar en corchetes [] para que se interprete como un atributo (y se bindeen). Por otra parte el contenido de la etiqueta también puede ser un elemento **TS** pero este tiene que ir dentro de doble llaves {{}} para que se interprete (a esto se le llama interpolación de texto).
