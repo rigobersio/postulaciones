@@ -8,6 +8,5 @@ import { Component } from "@angular/core";
 })
 
 export class ContadorComponent {
-
-    public contador: number = 0;
+    title = 'postulaciones-angular-mongo';
 }

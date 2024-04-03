@@ -9,4 +9,6 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
+  title = 'postulaciones-angular-mongo';
+  const nombreComponente: string = 'login';
 }

@@ -257,4 +257,35 @@ en este caso el nombre es **postulaciones-app**
     ```bash
     ng generate component login
     ```
-        
+# Tipado en TS
+1. Para especificar el tipado de una variable, por ejemplo en una clase se puede hacer ocupando ":" luego de nombre de la variable he indicando el tipo de dato que tendrá. Por ejemplo:
+    ```typescript
+    export class ContadorComponent {
+        let contador: number = 0;
+    }
+    ```      
+    Asimismo para especificar el tipado de estructuras más complejas como un objeto se puede crear un nuevo archivo donde se indiquen los tipos de dato de cada propiedad y luego importar ese archivo en el componente. Esto se hace mediante lo que se conoce como interfaces. Por ejemplo, para un objeto que almacenará información sobre una persona, se puede crear un archivo **persona.ts** y dentro de este archivo se definen los tipos de datos de cada propiedad ocupando una interface. ejemplo:
+    ```typescript
+    export interface Persona {
+        nombre: string;
+        edad: number;
+    }
+    ```
+    luego esto se puede importar en el componente:
+    ```typescript
+    import { Persona } from './persona';
+    export class ContadorComponent {
+        public persona: Persona = {
+            nombre: 'Juan',
+            edad: 25
+        }
+    }
+    ```
+    el tipo de dato también se puede asignar directamente en el propiedad, por ejemplo:
+    ```typescipt
+    export class PersonaComponent {
+        nombre: string = 'Juan';
+        edad: number = 25;
+    }
+    ```	
+
