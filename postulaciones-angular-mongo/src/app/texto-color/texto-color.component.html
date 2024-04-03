@@ -1,1 +1,9 @@
-<p>texto-color works!</p>
+<div>
+    <p [class]="textoColor">{{ texto }}</p>
+    <br/>
+    <button class="btn btn-primary" [disabled]="condicion" (click)="cambioColor('text-primary')">color azul</button>
+    <button class="btn btn-success" [disabled]="condicion" (click)="cambioColor('text-success')">color verde</button>
+    <button class="btn btn-danger"[disabled]="condicion" (click)="cambioColor('text-danger')">color rojo</button>
+    <br/>
+    <button class="btn btn-dark" (click)="CambioCondicion()">Hola</button>
+</div>
