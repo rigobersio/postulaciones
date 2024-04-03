@@ -8,5 +8,18 @@ import { Component } from "@angular/core";
 })
 
 export class ContadorComponent {
-    title = 'postulaciones-angular-mongo';
+    title: string;
+    numero: number;
+    constructor() {
+        this.title = 'Botón para contar todos los clicles que realice el usuario';
+        this.numero = 0;
+    }
+
+    incrementar() {
+        this.numero++;
+    };
+    decrementar() {
+        this.numero--;
+    };
+    
 }

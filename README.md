@@ -289,3 +289,32 @@ en este caso el nombre es **postulaciones-app**
     }
     ```	
 
+# Lógica para el botón
+    Pasos para crear un botón en ContadorComponent:
+    ```typescript
+    export class ContadorComponent {
+        title: string;
+        numero: number;
+
+        constructor() {
+            this.title = 'Botón para contar todos los clicles que realice el usuario'; 
+            this.numero = 0;
+        }
+
+        incrementar() {
+            this.numero++;
+        }
+
+        decrementar() {
+            this.numero--;
+        }
+    }
+    ```
+    mientras que en el contador.component.html:
+    ```html
+    <h1>{{ title }}</h1>
+    <br/>
+    <button (click)="incrementar()">+</button>
+    <span>{{ numero }}</span>
+    <button (click)="decrementar()">-</button>
+    ``` 

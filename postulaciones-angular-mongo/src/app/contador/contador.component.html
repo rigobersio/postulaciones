@@ -1,1 +1,12 @@
-<h3>Contador de ...</h3>
+<h3>Contador de cliqueos</h3>
+<div>
+    <span>{{ title }}</span>
+    <br/>
+    <button id="button1" (click)="incrementar()">
+        +
+    </button>
+    <span>{{ numero }}</span>
+    <button id="button2" (click)="decrementar()">
+        -
+    </button>
+</div>
