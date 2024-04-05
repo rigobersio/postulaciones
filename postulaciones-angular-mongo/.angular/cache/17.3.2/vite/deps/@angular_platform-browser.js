@@ -28,7 +28,6 @@ import {
   createApplication,
   disableDebugTools,
   enableDebugTools,
-  getDOM,
   initDomAdapter,
   makeStateKey,
   platformBrowser,
@@ -36,8 +35,11 @@ import {
   provideProtractorTestingSupport,
   withHttpTransferCacheOptions,
   withNoHttpTransferCache
-} from "./chunk-6RID3OEN.js";
-import "./chunk-YVWIMTHM.js";
+} from "./chunk-ZKSPQYEL.js";
+import {
+  getDOM
+} from "./chunk-MHAXRG4F.js";
+import "./chunk-S5GZLNJS.js";
 export {
   BrowserModule,
   By,

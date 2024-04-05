@@ -356,3 +356,115 @@ en este caso el nombre es **postulaciones-app**
         <button (click)="cambiarValorCondicional()">{{ nombreDeUnBoton }}</button>
         ```
         Los valores de los atributos de las etiquetas HTML se pueden modificar de forma dinámica y además se puede escribir directamente siendo elemento **TS**, no obstante hay que encerrarlos entre comillas y el nombre del atributo se tiene que encerrar en corchetes [] para que se interprete como un atributo (y se bindeen). Por otra parte el contenido de la etiqueta también puede ser un elemento **TS** pero este tiene que ir dentro de doble llaves {{}} para que se interprete (a esto se le llama interpolación de texto).
+
+# formularios Reactivos con Angular Material
+
+    1. Estilos CSS
+
+    configuración básica del código HTML con algunos estilos.
+
+    ```html
+    <div style="width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center">
+
+    </div>
+    ```
+    2. Instalación de Angular Material
+
+    ```bash
+    ng add @angular/material
+
+    // instalación y ejecución: Yes
+    // elección de tema
+    // agregar tipografía: Yes
+    // agrega modulo de animaciones: Yes
+    ```
+    3. Importar los modulos de Angular Material para formularios reactivos
+
+    ```typescript
+    import { MatButtonModule } from '@angular/material/button';
+    import { MatFormFieldModule } from '@angular/material/form-field';
+    import { MatInputModule } from '@angular/material/input';
+    // import { MatSelectModule } from '@angular/material/select';
+    ```
+
+    4. Agregar los módulos a array imports del decorador @component
+    ```
+    @Component({
+        imports: [
+            MatButtonModule,
+            MatFormFieldModule,
+            MatInputModule,
+            // MatSelectModule
+        ]
+    })
+    ```
+    5. Declarar las propiedades que se ocuparan en el componente
+    ```typescript
+    export class FormComponent {
+
+        nombre: FormControl = new FormControl('', Validators.required);
+        correo: FormControl = new FormControl('', [Validators.required, Validators.email]);
+        Ciudad: FormControl = new FormControl('', Validators.required);
+        calle: FormControl = new FormControl('', Validators.required);
+        numero: FormControl = new FormControl('', Validators.required);
+        telefono: FormControl = new FormControl('', [Validators.required, Validators.pattern('[0-9]{10}')]);
+        tipoDePostulacion: FormControl = new FormControl('', Validators.required);
+
+        formulario: FormGroup = FormGroup;
+
+        constructor(private fb: FormBuilder) {
+            this.formulario = this.fb.group({
+                nombre: this.nombre,
+                correo: this.correo,
+                ciudad: this.ciudad,
+                calle: this.calle,
+                numero: this.numero,
+                telefono: this.telefono,
+                tipoDePostulacion: this.tipoDePostula
+            });
+            
+        }
+
+        enviarFormulario() {
+            alert(this.formulario.value);
+            this.formulario.reset();
+        }
+    }
+    ```
+    6. Análisis superficial del punto "5"
+
+    nombre: FormControl = new FormControl('', Validators.required);
+
+        6.1 ¿Qué es un tipo de dato FormControl?
+        Primero que nada `nombre` o las otras propiedades son una instancia de `FormControl`. En Angular, `FormControl` es una clase que se utiliza para rastrear el valor y el estado de validación de un `control de formulario individual. Cada instancia de FormControl tiene métodos y propiedades para manejar los datos del formulario`. La instancia de FormControl para "nombre" se inicializa con un valor vacío **('')** y se le asigna un **validador** `(Validators.required)`, que indica que este campo es obligatorio.
+
+        6.2 validaciones
+            6.2.1 Validators.required: Este validador se utiliza para hacer que un campo sea obligatorio. Si el campo está vacío, el formulario será inválido.
+        
+            6.2.2 Validators.email: Este validador se utiliza para validar que el valor ingresado en un campo tenga un formato de correo electrónico válido.
+            6.2.3 Validators.minLength(n): Este validador se utiliza para requerir que el valor ingresado en un campo tenga al menos n caracteres.
+            6.2.4 Validators.maxLength(n): Este validador se utiliza para requerir que el valor ingresado en un campo tenga como máximo n caracteres.
+            6.2.5 Validators.pattern(regexp): Este validador se utiliza para requerir que el valor ingresado en un campo coincida con una expresión regular dada.
+            6.2.5.1 Validators.pattern: Este validador se utiliza para requerir que el valor ingresado en un campo coincida con una expresión regular dada. Aquí te dejo algunos ejemplos clásicos:
+                6.2.5.1.1 Validar un número de teléfono de 10 dígitos: Validators.pattern('[0-9]{10}')
+                6.2.5.1.2 Validar un código postal de 5 dígitos: Validators.pattern('[0-9]{5}')
+                6.2.5.1.3 Validar que un campo solo contenga letras: Validators.pattern('[a-zA-Z ]*')
+
+        6.2.6 Para un input de tipo texto descriptivo, puedes usar los validadores Validators.minLength(n), Validators.maxLength(n) y Validators.pattern(regexp) para controlar el número de caracteres y los tipos de caracteres permitidos.
+            6.2.6.1 Por ejemplo, para un campo que permita letras del alfabeto español (incluyendo acentos y la ñ), puedes usar una expresión regular como esta: Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*').
+
+        6.2.7 Para una selección múltiple donde solo se puede seleccionar un elemento, normalmente se usaría un grupo de botones de radio. En Angular, puedes usar Validators.required para asegurarte de que al menos uno de los botones de radio esté seleccionado {para una selección múltiple donde se pueden seleccionar varios elementos, normalmente se usaría un grupo de casillas de verificación. En este caso, podrías crear un validador personalizado para asegurarte de que se seleccionen al menos un cierto número de casillas}.
+
+        6.3 algunas aclaraciones sobre el funcionamiento de Angular y el constructor de la clase
+        
+        `¿Cuando se llama a la función constructora y que se le pasa por argumento?`
+        El constructor se llama cuando se renderiza el componente. Angular tiene una característica especial que se llama inyección de dependencias. En el caso de `constructor(private fb: FormBuilder) {...}`, Angular está inyectando una instancia de FormBuilder en el componente. La instancia de FormBuilder es creada y administrada por Angular mismo y no necesita ser creada manualmente.
+        La palabra clave private simplemente significa que fb solo puede ser accedido desde dentro de la clase FormComponent. Es una convención en Angular hacer privados los servicios inyectados para que no puedan ser accedidos desde fuera de la clase.
+        Entonces, en this.fb.group({...}), fb es una instancia de FormBuilder que Angular ha inyectado en en el componente, y se está utilizando esa instancia para llamar al método **group**
+
+    7. Plantilla del formulario en Html
+
+
+
+
+
