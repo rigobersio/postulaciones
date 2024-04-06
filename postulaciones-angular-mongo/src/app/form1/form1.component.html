@@ -5,44 +5,44 @@
     <mat-form-field appearance="fill">
       <div *ngIf="formulario.get('nombre').invalid && formulario.get('nombre').touched"></div>
     </mat-form-field>
-    <p>{{ formulario.get('nombre').value }}</p>
-    <mat-from-fiel appearance="fill">
+    <p>{{ formulario.get('nombre')?.value }}</p>
+    <mat-form-field appearance="fill">
       <mat-label>Correo Electrónico</mat-label>
-      <input matInput formControlName="email">
-      <div ngIf="formulario.get('email').invalid && formulario.get('email').touched">
-        <mat-error *ngIf="formulario.get('email').errors['required']">El correo es requerido</mat-error>
-        <mat.error *ngIf="formulario.get('email').errors['email']">El correo no es valido</mat-error>
+      <input matInput formControlName="correo">
+      <div *ngIf="formulario.get('correo').invalid && formulario.get('correo').touched">
+        <mat-error *ngIf="formulario.get('correo').errors['required']">El correo es requerido</mat-error>
+        <mat-error *ngIf="formulario.get('correo').errors['correo']">El correo no es valido</mat-error>
       </div>
-      <p>{{ formulario.get('email').value }}</p>
+      <p>{{ formulario.get('correo')?.value }}</p>
       <input matInput formControlName="ciudad">
-      <div ngIf="formulario.get('ciudad').invalid && formulario.get('ciudad').touched">
+      <div *ngIf="formulario.get('ciudad').invalid && formulario.get('ciudad').touched">
         <mat-error *ngIf="formulario.get('ciudad').errors['required']">La ciudad es requerida</mat-error>
       </div>
-      <p>{{ formulario.get('ciudad').value }}</p>
+      <p>{{ formulario.get('ciudad')?.value }}</p>
       <input matInput formControlName="calle">
-      <div ngIf="formulario.get('calle').invalid && formulario.get('calle').touched">
+      <div *ngIf="formulario.get('calle').invalid && formulario.get('calle').touched">
         <mat-error *ngIf="formulario.get('calle').errors['required']">La calle es requerida</mat-error>
       </div>
-      <p>{{ formulario.get('calle').value }}</p>
+      <p>{{ formulario.get('calle')?.value }}</p>
       <input matInput formControlName="numero">
-      <div ngIf="formulario.get('numero').invalid && formulario.get('numero').touched">
+      <div *ngIf="formulario.get('numero').invalid && formulario.get('numero').touched">
         <mat-error *ngIf="formulario.get('numero').errors['required']">El número es requerido</mat-error>
         <mat-error *ngIf="formulario.get('numero').errors['pattern']">Por favor ingrese un número valido</mat-error>
       </div>
-      <p>{{ formulario.get('numero').value }}</p>
+      <p>{{ formulario.get('numero')?.value }}</p>
       <input matInput formControlName="telefono">
-      <div ngIf="formulario.get('telefono').invalid && formulario.get('telefono').touched">
+      <div *ngIf="formulario.get('telefono').invalid && formulario.get('telefono').touched">
         <mat-error *ngIf="formulario.get('telefono').errors['required']">El número de teléfono es requerido</mat-error>
         <mat-error *ngIf="formulario.get('telefono').errors['pattern']">Por favor ingrese un número valido</mat-error>
       </div>
-      <p>{{ formulario.get('telefono').value }}</p>
-      <input matInput formControlName="tipoPostulacion">
-      <div ngIf="formulario.get('tipoPostulacion').invalid && formulario.get('tipoPostulacion').touched">
-        <mat-error *ngIf="formulario.get('tipoPostulacion').errors['required']">La postulación es requerida</mat-error>
+      <p>{{ formulario.get('telefono')?.value }}</p>
+      <input matInput formControlName="postulacion">
+      <div *ngIf="formulario.get('postulacion').invalid && formulario.get('postulacion').touched">
+        <mat-error *ngIf="formulario.get('postulacion').errors['required']">La postulación es requerida</mat-error>
       </div>
       <br/>
-      <button mat-raised-button color="primary" (click)="enviarFormulario()" [disabled]="formulario.invalid" [mat-dialog-close]>Enviar</button>
-    </mat-from-fiel>
+      <button mat-raised-button color="primary" (click)="enviarFormulario()" [disabled]="formulario.invalid">Enviar</button>
+    </mat-form-field>
 
   </div>
 </div>

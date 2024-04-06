@@ -465,6 +465,22 @@ en este caso el nombre es **postulaciones-app**
     7. Plantilla del formulario en Html
 
 
+    FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl son clases solo ( no son módulos, componentes, directivas, o pipes.)
+
+  Este error indica que estás intentando acceder a la propiedad value de un objeto que podría ser null. En este caso, el objeto es el resultado de formulario.get('nombre').
+
+Para solucionar este problema, puedes utilizar el operador de navegación segura de Angular (?.) para proteger contra null y undefined en la cadena de propiedades. Aquí te dejo un ejemplo de cómo hacerlo:
+
+HTML
+
+<p>{{ formulario.get('nombre')?.value }}</p>
+Código generado por IA. Revisar y usar cuidadosamente. Más información sobre preguntas frecuentes.
+Este código solo intentará acceder a la propiedad value si formulario.get('nombre') no es null o undefined.
+
+
 
 
 
