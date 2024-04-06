@@ -481,6 +481,8 @@ Código generado por IA. Revisar y usar cuidadosamente. Más información sobre 
 Este código solo intentará acceder a la propiedad value si formulario.get('nombre') no es null o undefined.
 
 
+estilos <mat-form-field> se coloca por cada input
+
 
 
 

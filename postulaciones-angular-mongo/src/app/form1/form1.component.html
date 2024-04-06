@@ -1,6 +1,5 @@
-<div
-  style="width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center">
-  <div [formGroup]="formulario" style="width: 100vw; height: 100vh; display: flex; flex-direction=column;
+<div class="formularioPostulaciones">
+  <div [formGroup]="formulario" style="width: 100vw; height: 100vh; display: flex; flex-direction:column;
     justify-content: center; align-items: center">
     
     <mat-form-field appearance="fill">
@@ -27,6 +26,7 @@
       <p>{{ formulario.get('correo')?.value }}</p>
     
     <mat-form-field appearance="fill">
+      <mat-label>Ciudad</mat-label>
       <input matInput formControlName="ciudad">
       <div *ngIf="formulario.get('ciudad').invalid && formulario.get('ciudad').touched">
         <mat-error *ngIf="formulario.get('ciudad').errors['required']">La ciudad es requerida</mat-error>
@@ -36,6 +36,7 @@
     <p>{{ formulario.get('ciudad')?.value }}</p>
     
     <mat-form-field appearance="fill">
+      <mat-label>Calle</mat-label>
       <input matInput formControlName="calle">
       <div *ngIf="formulario.get('calle').invalid && formulario.get('calle').touched">
         <mat-error *ngIf="formulario.get('calle').errors['required']">La calle es requerida</mat-error>
@@ -45,6 +46,7 @@
       <p>{{ formulario.get('calle')?.value }}</p>
     
     <mat-form-field appearance="fill">
+      <mat-label>Numero</mat-label>
       <input matInput formControlName="numero">
       <div *ngIf="formulario.get('numero').invalid && formulario.get('numero').touched">
         <mat-error *ngIf="formulario.get('numero').errors['required']">El número es requerido</mat-error>
@@ -55,6 +57,7 @@
       <p>{{ formulario.get('numero')?.value }}</p>
     
     <mat-form-field appearance="fill">
+      <mat-label>Telefono</mat-label>
       <input matInput formControlName="telefono">
       <div *ngIf="formulario.get('telefono').invalid && formulario.get('telefono').touched">
         <mat-error *ngIf="formulario.get('telefono').errors['required']">El número de teléfono es requerido</mat-error>
@@ -65,15 +68,16 @@
       <p>{{ formulario.get('telefono')?.value }}</p>
     
     <mat-form-field appearance="fill">
+      <mat-label>Postulación</mat-label>
       <input matInput formControlName="postulacion">
       <div *ngIf="formulario.get('postulacion').invalid && formulario.get('postulacion').touched">
         <mat-error *ngIf="formulario.get('postulacion').errors['required']">La postulación es requerida</mat-error>
       </div>
     </mat-form-field>
       <br/>
-    <mat-form-field appearance="fill">
+    
       <button mat-raised-button color="primary" (click)="enviarFormulario()" [disabled]="formulario.invalid">Enviar</button>
-    </mat-form-field>
+    
 
   </div>
 </div>
