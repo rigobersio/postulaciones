@@ -483,6 +483,8 @@ Este código solo intentará acceder a la propiedad value si formulario.get('nom
 
 estilos <mat-form-field> se coloca por cada input
 
+Para solucionar este problema, debes importar el módulo CommonModule en el módulo donde se define tu componente. El CommonModule contiene las directivas básicas de Angular, como *ngIf, *ngFor, y otras.
+
 
 
 

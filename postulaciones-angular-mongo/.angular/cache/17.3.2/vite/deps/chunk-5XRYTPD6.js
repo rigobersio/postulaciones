@@ -1,6 +1,6 @@
 import {
   DOCUMENT
-} from "./chunk-2UQF7WDO.js";
+} from "./chunk-2GHFRDYQ.js";
 import {
   ANIMATION_MODULE_TYPE,
   Inject,
@@ -12,7 +12,7 @@ import {
   setClassMetadata,
   ɵɵdefineInjectable,
   ɵɵinject
-} from "./chunk-24JX4UGP.js";
+} from "./chunk-RQJYVURK.js";
 
 // node_modules/@angular/animations/fesm2022/animations.mjs
 var AnimationMetadataType;
@@ -74,6 +74,20 @@ function transition(stateChangeExpr, steps, options = null) {
     type: AnimationMetadataType.Transition,
     expr: stateChangeExpr,
     animation: steps,
+    options
+  };
+}
+function animateChild(options = null) {
+  return {
+    type: AnimationMetadataType.AnimateChild,
+    options
+  };
+}
+function query(selector, animation, options = null) {
+  return {
+    type: AnimationMetadataType.Query,
+    selector,
+    animation,
     options
   };
 }
@@ -466,6 +480,8 @@ export {
   style,
   state,
   transition,
+  animateChild,
+  query,
   NoopAnimationPlayer,
   AnimationGroupPlayer,
   ɵPRE_STYLE
@@ -479,4 +495,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-QL4FHMLB.js.map
+//# sourceMappingURL=chunk-5XRYTPD6.js.map
