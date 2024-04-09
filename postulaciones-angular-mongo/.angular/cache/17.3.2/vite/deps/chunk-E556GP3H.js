@@ -3371,10 +3371,40 @@ function take(count2) {
   });
 }
 
+// node_modules/rxjs/dist/esm5/internal/operators/ignoreElements.js
+function ignoreElements() {
+  return operate(function(source, subscriber) {
+    source.subscribe(createOperatorSubscriber(subscriber, noop));
+  });
+}
+
 // node_modules/rxjs/dist/esm5/internal/operators/mapTo.js
 function mapTo(value) {
   return map(function() {
     return value;
+  });
+}
+
+// node_modules/rxjs/dist/esm5/internal/operators/delayWhen.js
+function delayWhen(delayDurationSelector, subscriptionDelay) {
+  if (subscriptionDelay) {
+    return function(source) {
+      return concat(subscriptionDelay.pipe(take(1), ignoreElements()), source.pipe(delayWhen(delayDurationSelector)));
+    };
+  }
+  return mergeMap(function(value, index) {
+    return innerFrom(delayDurationSelector(value, index)).pipe(take(1), mapTo(value));
+  });
+}
+
+// node_modules/rxjs/dist/esm5/internal/operators/delay.js
+function delay(due, scheduler) {
+  if (scheduler === void 0) {
+    scheduler = asyncScheduler;
+  }
+  var duration = timer(due, scheduler);
+  return delayWhen(function() {
+    return duration;
   });
 }
 
@@ -24477,6 +24507,7 @@ export {
   defaultIfEmpty,
   take,
   mapTo,
+  delay,
   distinctUntilChanged,
   finalize,
   first,
@@ -24988,4 +25019,4 @@ export {
    * found in the LICENSE file at https://angular.io/license
    *)
 */
-//# sourceMappingURL=chunk-A5XVEZW3.js.map
+//# sourceMappingURL=chunk-E556GP3H.js.map

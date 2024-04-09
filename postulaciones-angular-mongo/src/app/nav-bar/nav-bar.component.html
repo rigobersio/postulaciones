@@ -1,9 +1,21 @@
-<mat-toolbar>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+<div class="container">
+  <mat-toolbar>
+    <button mat-button [matMenuTriggerFor]="menu" class="example-icon" aria-label="Example icon-button with menu icon">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>My App</span>
-    <span class="example-spacer"></span>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="showContador()">Contador de cliqueos </button>
+      <button mat-menu-item (click)="showTextoColor()">Texto con color</button>
+      <button mat-menu-item (click)="showForm1()">Formulario de Postulaciones</button>
+      <button mat-menu-item (click)="showCompasFantasmas()">Compras Fantasmas</button>
+    </mat-menu>
+
+    <ng-container *ngIf="ComponentToRender">
+      <ng-container *ngComponentOutlet="ComponentToRender"></ng-container>
+    </ng-container>
+
+    <span>Postulaciones y compras fantasmas</span>
+    <span class="spacer"></span>
     <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>favorite</mat-icon>
     </button>
@@ -11,3 +23,4 @@
       <mat-icon>share</mat-icon>
     </button>
   </mat-toolbar>
+</div>

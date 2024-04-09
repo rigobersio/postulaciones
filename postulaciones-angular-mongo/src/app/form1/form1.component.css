@@ -1,6 +1,6 @@
 .formularioPostulaciones {
-    width: 100vw;
-    height: 100vh;
+    margin-top: 55rem;
+    max-width: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -11,5 +11,7 @@
     font-size: 0.81rem;
     font-weight: bold;
     margin-bottom: 1rem;
+    max-width: 90%;
+    margin:0 auto;
     color:darkslategrey
 }

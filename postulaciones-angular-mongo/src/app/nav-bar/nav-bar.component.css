@@ -1,3 +1,10 @@
-.example-spacer {
+.container {
+  max-width: 90%;
+  margin: 0 auto
+
+}
+
+.spacer {
     flex: 1 1 auto;
+    
   }
