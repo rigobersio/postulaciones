@@ -363,8 +363,30 @@ en este caso el nombre es **postulaciones-app**
 
     configuración básica del código HTML con algunos estilos.
 
+    ```css
+    .formularioPostulaciones {
+    margin-top: 55rem;
+    max-width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.titulo {
+    font-size: 0.81rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    max-width: 90%;
+    margin:0 auto;
+    color:darkslategrey
+}
+    ```
+
     ```html
-    <div style="width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center">
+    <div class="formularioPostulaciones">
+  <h2 class="titulo">Formulario de Postulaciones</h2>
+  <div [formGroup]="formulario" style="width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center">
 
     </div>
     ```
@@ -378,17 +400,35 @@ en este caso el nombre es **postulaciones-app**
     // agregar tipografía: Yes
     // agrega modulo de animaciones: Yes
     ```
-    3. Importar los modulos de Angular Material para formularios reactivos
+    3. Importar los módulos de:
 
-    ```typescript
-    import { MatButtonModule } from '@angular/material/button';
-    import { MatFormFieldModule } from '@angular/material/form-field';
-    import { MatInputModule } from '@angular/material/input';
-    // import { MatSelectModule } from '@angular/material/select';
-    ```
+        ¿para que sirve cada cosa???
+    
+        3.1 Angular Material para formularios reactivos
+
+        ```typescript
+        import { MatButtonModule } from '@angular/material/button';
+        import { MatFormFieldModule } from '@angular/material/form-field';
+        import { MatInputModule } from '@angular/material/input';
+        import { MatSelectModule } from '@angular/material/select';
+        ```
+
+        3.2 angular forms:
+
+        ```typescript
+        import { 
+        ReactiveFormsModule,
+        FormBuilder,
+        FormGroup,
+        Validators,
+        FormControl 
+        } from '@angular/forms';
+        ```
+
 
     4. Agregar los módulos a array imports del decorador @component
-    ```
+
+    ```typescrit
     @Component({
         imports: [
             MatButtonModule,
@@ -398,37 +438,50 @@ en este caso el nombre es **postulaciones-app**
         ]
     })
     ```
-    5. Declarar las propiedades que se ocuparan en el componente
+    5. Declarar las propiedades que se ocuparan en el componente entre otras cosas
+
     ```typescript
-    export class FormComponent {
+    export class Form1Component {
 
-        nombre: FormControl = new FormControl('', Validators.required);
-        correo: FormControl = new FormControl('', [Validators.required, Validators.email]);
-        Ciudad: FormControl = new FormControl('', Validators.required);
-        calle: FormControl = new FormControl('', Validators.required);
-        numero: FormControl = new FormControl('', Validators.required);
-        telefono: FormControl = new FormControl('', [Validators.required, Validators.pattern('[0-9]{10}')]);
-        tipoDePostulacion: FormControl = new FormControl('', Validators.required);
+    public arrPostulaciones: string[] = [
+        'Desarrollador web',
+        'Ingeniero de software',
+        'Diseñador gráfico',
+        'Analista de datos',
+        'Gerente de proyectos',
+        // Agrega más nombres de postulaciones según sea necesario
+    ];
 
-        formulario: FormGroup = FormGroup;
+    nombre: FormControl = new FormControl('', Validators.required);
+    correo: FormControl = new FormControl('', [Validators.required, Validators.email]);
+    ciudad: FormControl = new FormControl('', [Validators.required, Validators.pattern(/^\D+$/)]);
+    calle: FormControl = new FormControl('', [Validators.required, Validators.pattern(/^\D+$/)]);
+    numeroCasa: FormControl = new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]);
+    numeroPostal: FormControl = new FormControl('', [Validators.required, Validators.pattern('[0-9]{5}')]);
+    telefono: FormControl = new FormControl('', [Validators.required, Validators.pattern('[0-9]{11}')]);
+    postulacion: FormControl = new FormControl('', Validators.required);
 
-        constructor(private fb: FormBuilder) {
-            this.formulario = this.fb.group({
-                nombre: this.nombre,
-                correo: this.correo,
-                ciudad: this.ciudad,
-                calle: this.calle,
-                numero: this.numero,
-                telefono: this.telefono,
-                tipoDePostulacion: this.tipoDePostula
-            });
-            
-        }
+    formulario: FormGroup;
 
-        enviarFormulario() {
-            alert(this.formulario.value);
-            this.formulario.reset();
-        }
+    constructor(private fb: FormBuilder) {
+        this.formulario = this.fb.group({
+        nombre: this.nombre,
+        correo: this.correo,
+        ciudad: this.ciudad,
+        calle: this.calle,
+        numeroCasa: this.numeroCasa,
+        numeroPostal: this.numeroPostal,
+        telefono: this.telefono,
+        postulacion: this.postulacion
+        });
+
+    }
+
+    enviarFormulario() {
+        alert(JSON.stringify(this.formulario.value));
+        this.formulario.reset();
+    }
+
     }
     ```
     6. Análisis superficial del punto "5"
@@ -450,7 +503,7 @@ en este caso el nombre es **postulaciones-app**
                 6.2.5.1.2 Validar un código postal de 5 dígitos: Validators.pattern('[0-9]{5}')
                 6.2.5.1.3 Validar que un campo solo contenga letras: Validators.pattern('[a-zA-Z ]*')
 
-        6.2.6 Para un input de tipo texto descriptivo, puedes usar los validadores Validators.minLength(n), Validators.maxLength(n) y Validators.pattern(regexp) para controlar el número de caracteres y los tipos de caracteres permitidos.
+        6.2.6 Para un input de tipo texto descriptivo, se puede usar los validadores Validators.minLength(n), Validators.maxLength(n) y Validators.pattern(regexp) para controlar el número de caracteres y los tipos de caracteres permitidos.
             6.2.6.1 Por ejemplo, para un campo que permita letras del alfabeto español (incluyendo acentos y la ñ), puedes usar una expresión regular como esta: Validators.pattern('[a-zA-ZñÑáéíóúÁÉÍÓÚ ]*').
 
         6.2.7 Para una selección múltiple donde solo se puede seleccionar un elemento, normalmente se usaría un grupo de botones de radio. En Angular, puedes usar Validators.required para asegurarte de que al menos uno de los botones de radio esté seleccionado {para una selección múltiple donde se pueden seleccionar varios elementos, normalmente se usaría un grupo de casillas de verificación. En este caso, podrías crear un validador personalizado para asegurarte de que se seleccionen al menos un cierto número de casillas}.
@@ -460,10 +513,9 @@ en este caso el nombre es **postulaciones-app**
         `¿Cuando se llama a la función constructora y que se le pasa por argumento?`
         El constructor se llama cuando se renderiza el componente. Angular tiene una característica especial que se llama inyección de dependencias. En el caso de `constructor(private fb: FormBuilder) {...}`, Angular está inyectando una instancia de FormBuilder en el componente. La instancia de FormBuilder es creada y administrada por Angular mismo y no necesita ser creada manualmente.
         La palabra clave private simplemente significa que fb solo puede ser accedido desde dentro de la clase FormComponent. Es una convención en Angular hacer privados los servicios inyectados para que no puedan ser accedidos desde fuera de la clase.
-        Entonces, en this.fb.group({...}), fb es una instancia de FormBuilder que Angular ha inyectado en en el componente, y se está utilizando esa instancia para llamar al método **group**
+        Entonces, en this.fb.group({...}), fb es una instancia de FormBuilder que Angular ha inyectado en el componente, y se está utilizando esa instancia para llamar al método **group**
 
     7. Plantilla del formulario en Html
-
 
     FormBuilder,
   FormGroup,
@@ -487,4 +539,127 @@ Para solucionar este problema, debes importar el módulo CommonModule en el mód
 
 
 
+
+
+
+
+
+# algunas aclaraciones
+
+    ¿Dentro del decorador **@Component** que que cosas se agregan en el array de **imports** y qye cosas no?
+
+    ¿Qué son  módulos, componentes, directivas y pipes?
+
+    ¿Qué hay que hacer cuando un componente importa a otro y lo renderiza?
+    // el siguiente es porque la navbar está renderizando otros componentes
+import { CommonModule } from '@angular/common';
+esto se agrega en el **import** del decorador
+
+
+# barra de navegación
+
+1. análisis preliminar de ts
+
+```typescript
+import {Component} from '@angular/core';
+
+// el siguiente es porque la navbar está renderizando otros componentes
+import { CommonModule } from '@angular/common';
+
+
+
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
+
+// componentes
+import { ContadorComponent } from '../contador/contador.component';
+import { TextoColorComponent } from '../texto-color/texto-color.component';
+import { Form1Component } from '../form1/form1.component';
+
+@Component({
+  selector: 'app-nav-bar',
+  standalone: true,
+  imports: [CommonModule, MatToolbarModule, MatButtonModule, MatIconModule, MatMenuModule, ContadorComponent, TextoColorComponent, Form1Component],
+  templateUrl: './nav-bar.component.html',
+  styleUrl: './nav-bar.component.css'
+})
+export class NavBarComponent {
+
+ComponentToRender: any = null;
+
+showContador() {
+  this.ComponentToRender = ContadorComponent;
+}
+
+showTextoColor() {
+  this.ComponentToRender = TextoColorComponent
+}
+
+showForm1 () {
+  this.ComponentToRender = Form1Component;
+}
+
+showCompasFantasmas () {
+  this.ComponentToRender = null;
+}
+}
+
+
+````
+
+
+
+2. Análisis de html
+
+´´´typescript
+<div class="container">
+  <mat-toolbar>
+    <button mat-button [matMenuTriggerFor]="menu" class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="showContador()">Contador de cliqueos </button>
+      <button mat-menu-item (click)="showTextoColor()">Texto con color</button>
+      <button mat-menu-item (click)="showForm1()">Formulario de Postulaciones</button>
+      <button mat-menu-item (click)="showCompasFantasmas()">Compras Fantasmas</button>
+    </mat-menu>
+
+    <ng-container *ngIf="ComponentToRender">
+      <ng-container *ngComponentOutlet="ComponentToRender"></ng-container>
+    </ng-container>
+
+    <span>Postulaciones y compras fantasmas</span>
+    <span class="spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+```
+
+# algunas aclaraciones
+
+1. **if** en html
+    1.1 ejemplo con *ngComponentOutlet="ComponentToRender"
+2. [matMenuTriggerFor]="menu"
+3. ¿qué otros `*ng` existen?
+
+# posteriormente la NavBar se desarrollara más
+
+ ´´´html
+ <span>Postulaciones y compras fantasmas</span>
+    <span class="spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
+ ```
 
