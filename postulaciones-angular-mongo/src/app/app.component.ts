@@ -6,12 +6,14 @@ import { RouterOutlet } from '@angular/router';
 import { ContadorComponent } from './contador/contador.component';
 import { TextoColorComponent } from './texto-color/texto-color.component';
 import { Form1Component } from './form1/form1.component';
+import { LoginComponent } from './login/login.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
+    LoginComponent,
     RouterOutlet,
     NavBarComponent,
     ContadorComponent,
